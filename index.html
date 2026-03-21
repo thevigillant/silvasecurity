@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silva Security | Proteção Profissional</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           RESET & BASE
+        ============================================================ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #080808;
+            color: #f0f0f0;
+            line-height: 1.9;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        p {
+            line-height: 1.8;
+            letter-spacing: 0.2px;
+        }
+
+        /* ============================================================
+           CORES
+        ============================================================ */
+        .c-red    { color: #e01a1a !important; }
+        .bg-red   { background: #e01a1a !important; }
+        .c-gray   { color: #aaaaaa !important; }
+        .c-white  { color: #ffffff !important; }
+
+        /* ============================================================
+           NAVBAR
+        ============================================================ */
+        #navbar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 1000;
+            padding: 18px 0;
+            transition: all 0.4s ease;
+        }
+
+        #navbar.scrolled {
+            background: rgba(5,5,5,0.96);
+            backdrop-filter: blur(12px);
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .navbar-brand img { height: 58px; }
+
+        .nav-link {
+            color: #ccc !important;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 8px 16px !important;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover { color: #e01a1a !important; }
+
+        .btn-nav {
+            background: #e01a1a;
+            color: #fff !important;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 10px 24px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            border: 2px solid #e01a1a;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-nav:hover { background: transparent; color: #e01a1a !important; }
+
+        /* ============================================================
+           HERO
+        ============================================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background-color: #030303;
+            /* Fundo limpo e sofisticado, sem fotos amadoras */
+            background-image: radial-gradient(circle at 80% -20%, rgba(224, 26, 26, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 10% 110%, rgba(224, 26, 26, 0.1) 0%, transparent 35%);
+            padding-top: 80px;
+            overflow: hidden;
+        }
+
+        /* Overlay Escuro com Gradiente Sofisticado */
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(3,3,3,0.95) 0%, rgba(10,10,10,0.8) 100%);
+            z-index: 1;
+        }
+
+        /* Linha de grade sutil para ar tecnológico sem poluir */
+        .hero::after {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            padding: 80px 0;
+        }
+
+        .hero-badge-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .pulse-dot {
+            width: 10px; height: 10px;
+            background-color: #e01a1a;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(224, 26, 26, 0.7);
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(224, 26, 26, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(224, 26, 26, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(224, 26, 26, 0); }
+        }
+
+        .hero-kicker-pro {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #ccc;
+        }
+
+        .hero h1 {
+            font-size: clamp(3.2rem, 7vw, 5.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            margin-bottom: 32px;
+            color: #fff;
+        }
+
+        .hero h1 span {
+            color: transparent;
+            -webkit-text-stroke: 1px #e01a1a;
+            text-shadow: 0 0 20px rgba(224,26,26,0.3);
+        }
+
+        .hero-divider {
+            width: 80px;
+            height: 4px;
+            background: #e01a1a;
+            margin-bottom: 32px;
+            border-radius: 2px;
+        }
+
+        .hero p.lead {
+            font-size: 1.15rem;
+            color: #a0a0a0;
+            max-width: 580px;
+            margin-bottom: 48px;
+            line-height: 1.9;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 50px;
+            padding-top: 35px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            max-width: 580px;
+        }
+
+        .stat-item h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+
+        .stat-item p {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #777;
+            margin: 0;
+            font-weight: 700;
+        }
+        .btn-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #e01a1a;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 16px 36px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid #e01a1a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-main:hover {
+            background: transparent;
+            color: #e01a1a;
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 14px 30px rgba(224,26,26,0.35);
+        }
+
+        .btn-main:active {
+            transform: translateY(0) scale(0.97);
+            box-shadow: 0 4px 10px rgba(224,26,26,0.2);
+            transition-duration: 0.1s;
+        }
+
+        /* ============================================================
+           SECTIONS
+        ============================================================ */
+        .section-pad { padding: 120px 0; }
+
+        .section-label {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.72rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #e01a1a;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .divider-red {
+            width: 56px;
+            height: 4px;
+            background: #e01a1a;
+            border-radius: 2px;
+            margin-bottom: 60px;
+        }
+
+        .divider-red.center { margin-left: auto; margin-right: auto; }
+
+        /* ============================================================
+           SERVICE CARDS
+        ============================================================ */
+        .svc-card {
+            background: rgba(18, 18, 18, 0.9);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 12px;
+            padding: 48px 36px;
+            height: 100%;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        border-color 0.3s ease,
+                        box-shadow 0.35s ease,
+                        background 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .svc-card:hover {
+            border-color: rgba(224,26,26,0.6);
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: 0 24px 50px rgba(0,0,0,0.6), 0 0 35px rgba(224,26,26,0.12);
+            background: rgba(28,10,10,0.95);
+        }
+
+        .svc-card:active {
+            transform: translateY(-4px) scale(0.99);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            transition-duration: 0.1s;
+        }
+
+        .svc-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(224,26,26,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .svc-icon svg {
+            transition: stroke 0.3s ease;
+        }
+
+        .svc-card:hover .svc-icon {
+            background: #e01a1a;
+            transform: scale(1.15) rotate(-5deg);
+            box-shadow: 0 8px 20px rgba(224,26,26,0.4);
+        }
+
+        .svc-card:hover .svc-icon svg {
+            stroke: #ffffff;
+        }
+
+        .svc-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            transition: color 0.3s;
+        }
+
+        .svc-card:hover h4 { color: #ff4444; }
+
+        .svc-card p {
+            font-size: 0.95rem;
+            color: #888;
+            line-height: 1.85;
+            margin: 0;
+            transition: color 0.3s;
+        }
+
+        .svc-card:hover p { color: #aaa; }
+
+        /* ============================================================
+           DIFFERENTIALS
+        ============================================================ */
+        .diff-bg { background: #0d0d0d; }
+
+        .diff-item {
+            border-left: 3px solid #e01a1a;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: default;
+        }
+
+        .diff-item:last-child { margin-bottom: 0; }
+
+        .diff-item:hover {
+            background: rgba(224,26,26,0.06);
+            transform: translateX(12px);
+            border-left-width: 5px;
+            padding-left: 25px;
+        }
+
+        .diff-item:active {
+            transform: translateX(6px);
+            transition-duration: 0.1s;
+        }
+
+        .diff-item h5 {
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .diff-item p {
+            font-size: 0.9rem;
+            color: #888;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* ============================================================
+           TEAM IMAGE
+        ============================================================ */
+        .team-img-wrap {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .team-img-wrap img { 
+            display: block; width: 100%; 
+            transition: transform 0.6s ease;
+        }
+        .team-img-wrap:hover img { transform: scale(1.04); }
+
+        .team-text h2 { margin-bottom: 20px; }
+        .team-text p { color: #888; line-height: 1.9; margin-bottom: 24px; }
+
+        .check-list { list-style: none; padding: 0; }
+        .check-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .check-list li:last-child { border-bottom: none; }
+        .check-dot {
+            width: 8px; height: 8px;
+            min-width: 8px;
+            background: #e01a1a;
+            border-radius: 50%;
+        }
+
+        /* ============================================================
+           CTA
+        ============================================================ */
+        .cta-section {
+            background: #e01a1a;
+            padding: 100px 0;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            max-width: 650px;
+            margin: 0 auto 44px;
+            line-height: 1.8;
+        }
+
+        .btn-white {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            color: #e01a1a;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 18px 44px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-white:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
+        .footer {
+            background: #050505;
+            padding: 80px 0 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-heading {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
+        }
+
+        .footer-text {
+            color: #888;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s, padding-left 0.3s;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: #e01a1a;
+            padding-left: 6px;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .footer-contact-item svg {
+            margin-top: 4px;
+            flex-shrink: 0;
+            stroke: #e01a1a;
+        }
+        
+        .footer-contact-item a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-contact-item a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-copyright {
+            color: #666;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* WhatsApp Float */
+        .wa-float {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 58px; height: 58px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+            z-index: 999;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .wa-float:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(37,211,102,0.5); }
+
+        /* Scroll animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dynamic Logo Animations */
+        @keyframes floatBgLogo {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.05; filter: grayscale(100%) drop-shadow(0 0 0px rgba(224,26,26,0)); }
+            50% { transform: scale(1.04) rotate(2deg); opacity: 0.15; filter: grayscale(60%) drop-shadow(0 0 30px rgba(224,26,26,0.3)); }
+            100% { transform: scale(1) rotate(0deg); opacity: 0.05; filter: grayscale(100%) drop-shadow(0 0 0px rgba(224,26,26,0)); }
+        }
+        .bg-logo-anim {
+            display: none; /* Removing the ugly parallax background */
+        }
+        
+        .logo-text {
+            color: #fff; font-size: 1.6rem; font-weight: 900; margin: 0; letter-spacing: 2px; font-family: 'Outfit', sans-serif;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+        }
+        .logo-text span {
+            color: #e01a1a;
+            transition: text-shadow 0.3s ease;
+        }
+        .logo-text:hover {
+            transform: scale(1.06);
+        }
+        .logo-text:hover span {
+            text-shadow: 0 0 16px rgba(224,26,26,0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#" style="text-decoration: none; overflow: visible;">
+                <h4 class="logo-text">SILVA<span>SECURITY</span></h4>
+            </a>
+            <div class="d-flex align-items-center gap-2 gap-lg-4">
+                <a href="#servicos" class="nav-link d-none d-lg-block">Serviços</a>
+                <a href="#diferenciais" class="nav-link d-none d-lg-block">Diferenciais</a>
+                <a href="#equipe" class="nav-link d-none d-lg-block">Equipe</a>
+                <a href="https://wa.me/5534992664338" class="btn-nav" target="_blank">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="row hero-content">
+                <div class="col-lg-8 col-xl-7">
+                    <div class="hero-badge-wrap fade-up" style="transition-delay: 100ms;">
+                        <div class="pulse-dot"></div>
+                        <span class="hero-kicker-pro">Monitoramento Operacional 24h</span>
+                    </div>
+                    
+                    <h1 class="fade-up" style="transition-delay: 200ms;">
+                        SEGURANÇA <br> DE <span>ALTO NÍVEL</span>
+                    </h1>
+                    
+                    <div class="hero-divider fade-up" style="transition-delay: 300ms;"></div>
+                    
+                    <p class="lead fade-up" style="transition-delay: 400ms;">
+                        Soluções táticas integradas para preservação do seu negócio e patrimônio. 
+                        Profissionalismo cirúrgico, inteligência em vigilância e força de pronto-resposta.
+                    </p>
+                    
+                    <div class="fade-up" style="transition-delay: 500ms;">
+                        <a href="https://wa.me/5534992664338?text=Olá! Desejo consultar soluções de segurança empresarial." class="btn-main" target="_blank">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            Falar com Especialista
+                        </a>
+                    </div>
+
+                    <div class="hero-stats fade-up" style="transition-delay: 600ms;">
+                        <div class="stat-item">
+                            <h3>24/7</h3>
+                            <p>Prontidão Tática</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>100%</h3>
+                            <p>Comprometimento</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>Elite</h3>
+                            <p>Controle Técnico</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section id="servicos" class="section-pad">
+        <div class="container">
+            <div class="text-center mb-5 fade-up">
+                <span class="section-label">O Que Oferecemos</span>
+                <h2 class="section-title">NOSSOS SERVIÇOS</h2>
+                <div class="divider-red center"></div>
+                <p class="c-gray" style="max-width:600px; margin: 0 auto; font-size: 1rem; line-height: 1.9;">
+                    Soluções completas de segurança para empresas, condomínios e patrimônios privados em todo Brasil.
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="svc-card fade-up">
+                        <div class="svc-icon">
+                            <svg width="26" height="26" stroke="#e01a1a" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <h4>Vigilância Patrimonial</h4>
+                        <p>Proteção rigorosa de empresas, condomínios e propriedades com rondas e vigilância ostensiva.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="svc-card fade-up">
+                        <div class="svc-icon">
+                            <svg width="26" height="26" stroke="#e01a1a" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <h4>Vigia Patrimonial</h4>
+                        <p>Profissionais altamente treinados focados na prevenção e na segurança do seu ambiente.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="svc-card fade-up">
+                        <div class="svc-icon">
+                            <svg width="26" height="26" stroke="#e01a1a" fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6M3 15h6"/></svg>
+                        </div>
+                        <h4>Equipe de Portaria</h4>
+                        <p>Controle de acesso profissional para garantir que apenas pessoas autorizadas entrem no local.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="svc-card fade-up">
+                        <div class="svc-icon">
+                            <svg width="26" height="26" stroke="#e01a1a" fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                        </div>
+                        <h4>Escolta</h4>
+                        <p>Proteção móvel especializada para transporte seguro de bens de alto valor e pessoas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="svc-card fade-up">
+                        <div class="svc-icon">
+                            <svg width="26" height="26" stroke="#e01a1a" fill="none" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                        </div>
+                        <h4>Vídeo Monitoramento</h4>
+                        <p>Central de vigilância 24h com câmeras inteligentes e monitoramento remoto em tempo real.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="svc-card fade-up">
+                        <div class="svc-icon">
+                            <svg width="26" height="26" stroke="#e01a1a" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        </div>
+                        <h4>Serviços Gerais</h4>
+                        <p>Equipe de manutenção e limpeza para manter seu ambiente seguro e bem apresentado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIFERENCIAIS -->
+    <section id="diferenciais" class="section-pad diff-bg">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6 order-2 order-lg-1 fade-up">
+                    <span class="section-label">Por Que Nos Escolher</span>
+                    <h2 class="section-title mb-2">DIFERENCIAIS QUE<br><span class="c-red">GERAM CONFIANÇA</span></h2>
+                    <div class="divider-red" style="margin-bottom:40px;"></div>
+
+                    <div class="diff-item fade-up">
+                        <h5>
+                            <svg width="18" height="18" fill="none" stroke="#e01a1a" stroke-width="2.2" viewBox="0 0 24 24" style="margin-right:10px;vertical-align:middle"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            PRONTIDÃO 24 HORAS
+                        </h5>
+                        <p>Nossa central nunca para. Resposta imediata para qualquer emergência, a qualquer hora.</p>
+                    </div>
+                    <div class="diff-item fade-up">
+                        <h5>
+                            <svg width="18" height="18" fill="none" stroke="#e01a1a" stroke-width="2.2" viewBox="0 0 24 24" style="margin-right:10px;vertical-align:middle"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            EQUIPE TREINADA E UNIFORMIZADA
+                        </h5>
+                        <p>Profissionais rigorosamente selecionados, com treinamento contínuo e apresentação impecável.</p>
+                    </div>
+                    <div class="diff-item fade-up">
+                        <h5>
+                            <svg width="18" height="18" fill="none" stroke="#e01a1a" stroke-width="2.2" viewBox="0 0 24 24" style="margin-right:10px;vertical-align:middle"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            EXPERIÊNCIA COMPROVADA
+                        </h5>
+                        <p>Histórico sólido de proteção de empresas, condomínios e patrimônios de alto valor.</p>
+                    </div>
+                    <div class="diff-item fade-up">
+                        <h5>
+                            <svg width="18" height="18" fill="none" stroke="#e01a1a" stroke-width="2.2" viewBox="0 0 24 24" style="margin-right:10px;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>
+                            ATENDIMENTO RÁPIDO E CONFIÁVEL
+                        </h5>
+                        <p>Comprometimento total com nossos clientes — segurança com responsabilidade real.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 text-center fade-up">
+                    <div style="position:relative; display:inline-block;">
+                        <!-- Red accent border -->
+                        <div style="position:absolute; top:-12px; right:-12px; width:100%; height:100%; border:2px solid rgba(224,26,26,0.3); border-radius:12px; z-index:0;"></div>
+                        <img src="IMG/WhatsApp Image 2026-03-11 at 19.29.36 (2).jpeg"
+                             alt="Tecnologia Silva Security"
+                             style="position:relative;z-index:1;max-height:480px;width:100%;object-fit:cover;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.7),0 0 40px rgba(224,26,26,0.12);">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EQUIPE -->
+    <section id="equipe" class="section-pad">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5 fade-up">
+                    <div class="team-img-wrap">
+                        <img src="IMG/WhatsApp Image 2026-03-11 at 19.29.36 (3).jpeg" alt="Equipe Silva Security" class="rounded-3">
+                    </div>
+                </div>
+                <div class="col-lg-7 team-text fade-up">
+                    <span class="section-label">Nossa Equipe</span>
+                    <h2 class="section-title">PREPARO, DISCIPLINA<br><span class="c-red">E RESPONSABILIDADE</span></h2>
+                    <div class="divider-red" style="margin-bottom:32px;"></div>
+                    <p>
+                        Cada agente da nossa força tática é selecionado sob os mais rigorosos padrões de conduta, aptidão física e formação. A equipe age com discrição, eficiência e sem improvisos.
+                    </p>
+                    <p>
+                        Uniformizados e identificados, nossos agentes transmitem autoridade e inspiram confiança em todos os ambientes onde atuam.
+                    </p>
+                    <ul class="check-list mt-4">
+                        <li><span class="check-dot"></span> Treinamento tático e condicionamento físico contínuos</li>
+                        <li><span class="check-dot"></span> Padronização e identificação em serviço</li>
+                        <li><span class="check-dot"></span> Suporte e respaldo operacional 24h</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section text-center text-white">
+        <div class="container fade-up">
+            <h2>PRECISA DE SEGURANÇA<br>PROFISSIONAL?</h2>
+            <p>Solicite um orçamento agora mesmo e proteja seu patrimônio com quem realmente entende de segurança.</p>
+            <a href="https://wa.me/5534992664338?text=Olá! Gostaria de solicitar um orçamento." class="btn-white" target="_blank">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Falar no WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-5">
+                <!-- Coluna 1 -->
+                <div class="col-lg-4 col-md-6 fade-up">
+                    <a href="#" style="text-decoration: none; display: inline-block; margin-bottom: 24px; overflow: visible;">
+                        <h4 class="logo-text" style="font-size: 1.5rem;">SILVA<span>SECURITY</span></h4>
+                    </a>
+                    <p class="footer-text">
+                        Especialistas em vigilância patrimonial, monitoramento 24h e escolta tática. Proteção e confiança para o seu patrimônio com uma equipe de elite pronta para servir.
+                    </p>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="#" aria-label="Instagram" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; transition: background 0.3s, transform 0.3s;" onmouseover="this.style.background='#e01a1a'; this.style.transform='translateY(-3px)';" onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; transition: background 0.3s, transform 0.3s;" onmouseover="this.style.background='#e01a1a'; this.style.transform='translateY(-3px)';" onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Coluna 2 -->
+                <div class="col-lg-3 col-md-6 fade-up" style="transition-delay: 100ms;">
+                    <h5 class="footer-heading">Navegação Rápida</h5>
+                    <ul class="footer-links">
+                        <li><a href="#navbar">Página Inicial</a></li>
+                        <li><a href="#servicos">Nossos Serviços</a></li>
+                        <li><a href="#diferenciais">Diferenciais</a></li>
+                        <li><a href="#equipe">Equipe Tática</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 3 -->
+                <div class="col-lg-5 col-md-12 fade-up" style="transition-delay: 200ms;">
+                    <h5 class="footer-heading">Contato de Emergência</h5>
+                    
+                    <div class="footer-contact-item">
+                        <svg width="20" height="20" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <div>
+                            <strong>WhatsApp e Central 24h:</strong><br>
+                            <a href="https://wa.me/5534992664338" target="_blank">(34) 99266-4338</a>
+                        </div>
+                    </div>
+
+                    <div class="footer-contact-item">
+                        <svg width="20" height="20" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <div>
+                            <strong>E-mail Corporativo:</strong><br>
+                            <a href="mailto:contato@silvasecurity.com.br">contato@silvasecurity.com.br</a>
+                        </div>
+                    </div>
+
+                    <div class="footer-contact-item">
+                        <svg width="20" height="20" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <div>
+                            <strong>Atendimento Operacional:</strong><br>
+                            Cobertura de segurança patrimonial para a sua região.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom fade-up" style="transition-delay: 300ms;">
+                <p class="footer-copyright">&copy; <script>document.write(new Date().getFullYear())</script> Silva Security. Todos os direitos reservados.</p>
+                <p class="footer-copyright">Segurança · Confiança · Profissionalismo</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/5534992664338" class="wa-float" target="_blank" aria-label="WhatsApp">
+        <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((el, i) => {
+                if (el.isIntersecting) {
+                    setTimeout(() => el.target.classList.add('visible'), i * 80);
+                    observer.unobserve(el.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        // Ripple effect on buttons
+        document.querySelectorAll('.btn-main, .btn-nav, .btn-white').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = btn.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.cssText = `
+                    position:absolute;
+                    width:${size}px; height:${size}px;
+                    left:${e.clientX - rect.left - size/2}px;
+                    top:${e.clientY - rect.top - size/2}px;
+                    background:rgba(255,255,255,0.25);
+                    border-radius:50%;
+                    transform:scale(0);
+                    animation:ripple 0.5s linear;
+                    pointer-events:none;
+                `;
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Ripple keyframes
+        const style = document.createElement('style');
+        style.textContent = '@keyframes ripple { to { transform: scale(2.5); opacity: 0; } }';
+        document.head.appendChild(style);
+
+        // Dynamic Hero Logo Parallax
+        const logoWrapper = document.getElementById('dynamic-logo-wrapper');
+        if(logoWrapper) {
+            window.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 50;
+                const y = (e.clientY / window.innerHeight - 0.5) * 50;
+                // Keep the original centering combined with the new mouse movement
+                logoWrapper.style.transform = `translateY(-50%) translate(${x}px, ${y}px)`;
+            });
+        }
+    </script>
+</body>
+</html>
